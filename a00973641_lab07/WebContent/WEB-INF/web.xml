@@ -28,6 +28,11 @@
     <url-pattern>/main.jsp</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+  	<servlet-name>lab07</servlet-name>
+  	<url-pattern>/lab07</url-pattern>
+  </servlet-mapping>
+  
   <welcome-file-list>
     <welcome-file>/resources/main.jsp</welcome-file>
   </welcome-file-list>
