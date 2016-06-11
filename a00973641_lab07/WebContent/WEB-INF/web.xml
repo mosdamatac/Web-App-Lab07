@@ -4,12 +4,14 @@
     <servlet-name>main</servlet-name>
     <jsp-file>/resources/main.jsp</jsp-file>
   </servlet>
-  
   <servlet>
-  	<servlet-name>lab07</servlet-name>
-  	<servlet-class>a00973641.Lab07Servlet</servlet-class>
+  	<servlet-name>result</servlet-name>
+  	<jsp-file>/resources/result.jsp</jsp-file>
   </servlet>
-
+  <servlet>
+    <servlet-name>lab07</servlet-name>
+    <servlet-class>a00973641.Lab07Servlet</servlet-class>
+  </servlet>
   <context-param>
     <param-name>author</param-name>
     <param-value>Mara Damatac, A00973641</param-value>
@@ -22,17 +24,18 @@
     <param-name>footer</param-name>
     <param-value>A00973641 Mara 2016</param-value>
   </context-param>
-
   <servlet-mapping>
     <servlet-name>main</servlet-name>
     <url-pattern>/main.jsp</url-pattern>
   </servlet-mapping>
-  
   <servlet-mapping>
-  	<servlet-name>lab07</servlet-name>
-  	<url-pattern>/lab07</url-pattern>
+    <servlet-name>lab07</servlet-name>
+    <url-pattern>/lab07</url-pattern>
   </servlet-mapping>
-  
+  <servlet-mapping>
+  	<servlet-name>result</servlet-name>
+  	<url-pattern>/result.jsp</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>/resources/main.jsp</welcome-file>
   </welcome-file-list>

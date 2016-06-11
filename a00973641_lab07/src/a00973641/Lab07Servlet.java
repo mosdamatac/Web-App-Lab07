@@ -2,10 +2,14 @@ package a00973641;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Lab07Servlet
@@ -20,7 +24,20 @@ public class Lab07Servlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Add function
+		String sql = request.getParameter("queryBox");
+
+		// set cookie value
+		Cookie sqlCookie = new Cookie("sqlValue", sql);
+		response.addCookie(sqlCookie);
+
+		// Set sql string as http session attribute
+		HttpSession session = request.getSession();
+		session.setAttribute("sqlString", sql);
+
+		// Show result page
+		ServletContext ctx = getServletContext();
+		RequestDispatcher rd = ctx.getRequestDispatcher("/result.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
