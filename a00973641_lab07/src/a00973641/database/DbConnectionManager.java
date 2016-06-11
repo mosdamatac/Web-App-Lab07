@@ -16,12 +16,12 @@ import java.util.Properties;
 /**
  * @author Mara
  * 
- *         Single instance of DBConnectionManager.
- *
+ *         Single instance of DBConnectionManager. Methods to initialize,
+ *         connect, and disconnect to database.
  */
-public class DBConnectionManager {
+public class DbConnectionManager {
 
-	private static DBConnectionManager dbInstance = new DBConnectionManager();
+	private static DbConnectionManager dbInstance = new DbConnectionManager();
 	private static Connection connection;
 	private static Properties properties;
 
@@ -35,7 +35,7 @@ public class DBConnectionManager {
 		}
 	}
 
-	public static DBConnectionManager getInstance() {
+	public static DbConnectionManager getInstance() {
 		return dbInstance;
 	}
 
