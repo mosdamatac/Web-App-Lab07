@@ -6,6 +6,8 @@
  */
 package a00973641.database.dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +21,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import a00973641.data.MetaDataBean;
 import a00973641.database.DbConnectionManager;
+import a00973641.database.DbConstants;
 
 /**
  * @author Mara
@@ -35,32 +39,54 @@ public class DbDao {
 		Connection dbConn = null;
 		PreparedStatement ps = null;
 		try {
-			request.setAttribute("sqlString", sql);
+			// Initialize database connection properties
+			InputStream input = ctx.getResourceAsStream(DbConstants.DB_PROPERTIES_FILENAME);
+			db.init(input);
 
 			// Attempting to retrieve data
+			System.out.println("Attempting to connect...");
 			dbConn = db.getConnection();
 
 			// Prepare statement
+			System.out.println("Preparing statement...");
 			ps = dbConn.prepareStatement(sql);
 
 			// Execute query
+			System.out.println("Executing query...");
 			ResultSet rs = ps.executeQuery();
+
+			// Get resultset meta data
+			List<MetaDataBean> rsmdColumnNames = getRsmdColumnNames(rs);
+			request.setAttribute("rsmdColumnNames", rsmdColumnNames);
+
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
 	}
 
-	public static void getMetaData(ResultSet rs) {
-		List<String> columnNames = new ArrayList<>();
+	public static List<MetaDataBean> getRsmdColumnNames(ResultSet rs) {
+		List<MetaDataBean> tableMetaData = new ArrayList<>();
+		MetaDataBean mdBean = new MetaDataBean();
 
 		try {
 			ResultSetMetaData rsmd = rs.getMetaData();
-			for (int i = 0; i < rsmd.getColumnCount(); i++) {
-				columnNames.add(rsmd.getColumnLabel(i));
+			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+				mdBean.setColumnName(rsmd.getColumnLabel(i));
+				mdBean.setDataType(rsmd.getColumnTypeName(i));
+				mdBean.setColumnWidth(rsmd.getPrecision(i));
+				mdBean.setSearchable(rsmd.isSearchable(i));
+				mdBean.setWriteable(rsmd.isWritable(i));
+				mdBean.setNullable(rsmd.isNullable(i));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		return tableMetaData;
 	}
 }

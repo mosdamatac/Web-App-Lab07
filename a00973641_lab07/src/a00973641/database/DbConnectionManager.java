@@ -25,6 +25,13 @@ public class DbConnectionManager {
 	private static Connection connection;
 	private static Properties properties;
 
+	/**
+	 * Get database connection properties from dbprops.properties
+	 * 
+	 * @param input
+	 * @throws IOException
+	 * @throws SQLException
+	 */
 	public void init(InputStream input) throws IOException, SQLException {
 		try {
 			properties = new Properties();
@@ -35,10 +42,19 @@ public class DbConnectionManager {
 		}
 	}
 
+	/**
+	 * @return DbConnectionManager instance
+	 */
 	public static DbConnectionManager getInstance() {
 		return dbInstance;
 	}
 
+	/**
+	 * Connect to database server.
+	 * 
+	 * @return Current connection otherwise, connect to database server.
+	 * @throws SQLException
+	 */
 	public Connection getConnection() throws SQLException {
 		if (connection != null) {
 			return connection;
@@ -53,6 +69,13 @@ public class DbConnectionManager {
 		return connection;
 	}
 
+	/**
+	 * Get connection properties from dbprops.properties and connect to database
+	 * server.
+	 * 
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public void connect() throws ClassNotFoundException, SQLException {
 		Class.forName(properties.getProperty(DbConstants.DB_DRIVER_KEY));
 		connection = DriverManager.getConnection(properties.getProperty(DbConstants.DB_URL_KEY), properties);

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import a00973641.database.dao.DbDao;
+
 /**
  * Servlet implementation class Lab07Servlet
  */
@@ -24,6 +26,7 @@ public class Lab07Servlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		ServletContext ctx = getServletContext();
 		String sql = request.getParameter("queryBox");
 
 		// set cookie value
@@ -34,8 +37,10 @@ public class Lab07Servlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("sqlString", sql);
 
+		// Get data from query
+		DbDao.getData(request, response, ctx, sql);
+
 		// Show result page
-		ServletContext ctx = getServletContext();
 		RequestDispatcher rd = ctx.getRequestDispatcher("/result.jsp");
 		rd.forward(request, response);
 	}
