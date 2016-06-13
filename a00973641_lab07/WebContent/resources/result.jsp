@@ -1,4 +1,4 @@
-<%@ page import="java.util.List, a00973641.data.MetaDataBean" %>
+<%@ page import="java.util.List, java.sql.ResultSet, a00973641.data.MetaDataBean" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -44,10 +44,27 @@
 			<%} %>
 		</table>
 		
+		<br/><br/>
+		
 		<table name="dbData">
-			
+			<tr>
+			<% for (MetaDataBean mdb : mdBean) { %>
+				<th><%= mdb.getColumnName() %></th>
+			<%} %>
+			</tr>
+		
+			<%
+			ResultSet rs = (ResultSet) request.getAttribute("resultset");
+			while (rs.next()) {
+			%>
+			<tr>
+			<% for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) { %>
+				<td><%= rs.getString(i) %></td>			
+			<% } %>
+			</tr>
+			<% } %>
 		</table>
-
+		<br/><br/>
 	</div>
 	<footer>&copy; ${initParam.footer}</footer>
 </div>

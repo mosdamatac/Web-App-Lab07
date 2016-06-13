@@ -5,12 +5,16 @@
     <jsp-file>/resources/main.jsp</jsp-file>
   </servlet>
   <servlet>
-  	<servlet-name>result</servlet-name>
-  	<jsp-file>/resources/result.jsp</jsp-file>
+    <servlet-name>result</servlet-name>
+    <jsp-file>/resources/result.jsp</jsp-file>
   </servlet>
   <servlet>
     <servlet-name>lab07</servlet-name>
     <servlet-class>a00973641.Lab07Servlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>cookie</servlet-name>
+  	<servlet-class>a00973641.view.CookieServlet</servlet-class>
   </servlet>
   <context-param>
     <param-name>author</param-name>
@@ -33,8 +37,12 @@
     <url-pattern>/lab07</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>result</servlet-name>
-  	<url-pattern>/result.jsp</url-pattern>
+    <servlet-name>result</servlet-name>
+    <url-pattern>/result.jsp</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>cookie</servlet-name>
+  	<url-pattern>/cookie</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>/resources/main.jsp</welcome-file>

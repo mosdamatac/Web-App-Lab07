@@ -18,6 +18,7 @@
 </script>
 </head>
 <body>
+<jsp:include page="/cookie"/>
 <div id="wrapper">
 	<header>
 		<h2>${initParam.course}</h2>
@@ -27,9 +28,10 @@
 		<span id="title">Database Table Metadata</span><br/><br/><br/>
 		Enter the table name:<br/><br/>
 		<form action="lab07" name="sqlForm" method="post" onSubmit="return submitIt(this)">
-			<input type="text" name="queryBox"/><br/><br/>
+			<input type="text" name="queryBox" value="${requestScope.tbValue }"/><% %><br/><br/>
 			<input type="submit" value="Enter SELECT Query" name="submitQuery" class="button"/><br/><br/>
 		</form>
+		<br/>
 	</div>
 	<footer>&copy; ${initParam.footer}</footer>
 </div>

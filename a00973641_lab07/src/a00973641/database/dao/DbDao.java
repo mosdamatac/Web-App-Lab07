@@ -54,6 +54,7 @@ public class DbDao {
 			// Execute query
 			System.out.println("Executing query...");
 			ResultSet rs = ps.executeQuery();
+			request.setAttribute("resultset", rs);
 
 			// Get resultset meta data
 			List<MetaDataBean> rsmdMetaData = getRsmdMetaData(rs);

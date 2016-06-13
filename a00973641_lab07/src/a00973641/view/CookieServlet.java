@@ -1,22 +1,21 @@
-package a00973641;
+package a00973641.view;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import a00973641.database.dao.DbDao;
+import a00973641.util.CookieUtil;
 
 /**
- * Servlet implementation class Lab07Servlet
+ * Servlet implementation class CookieServlet
  */
-public class Lab07Servlet extends HttpServlet {
+@WebServlet("/CookieServlet")
+public class CookieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -26,24 +25,11 @@ public class Lab07Servlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ServletContext ctx = getServletContext();
-		String sql = request.getParameter("queryBox");
-
-		// set cookie value and max age
-		Cookie sqlCookie = new Cookie("sqlValue", sql);
-		sqlCookie.setMaxAge(60 * 60 * 24 * 7);
-		response.addCookie(sqlCookie);
-
-		// Set sql string as http session attribute
-		HttpSession session = request.getSession();
-		session.setAttribute("sqlString", sql);
-
-		// Get data from query
-		DbDao.getData(request, response, ctx, sql);
-
-		// Show result page
-		RequestDispatcher rd = ctx.getRequestDispatcher("/result.jsp");
-		rd.forward(request, response);
+		Cookie sqlCookie = CookieUtil.getCookie(request, "sqlValue");
+		if (sqlCookie != null)
+			request.setAttribute("tbValue", CookieUtil.getCookieValue(request, "sqlValue", ""));
+		else
+			request.setAttribute("tbValue", "");
 	}
 
 	/**
