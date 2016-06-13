@@ -56,8 +56,8 @@ public class DbDao {
 			ResultSet rs = ps.executeQuery();
 
 			// Get resultset meta data
-			List<MetaDataBean> rsmdColumnNames = getRsmdColumnNames(rs);
-			request.setAttribute("rsmdColumnNames", rsmdColumnNames);
+			List<MetaDataBean> rsmdMetaData = getRsmdMetaData(rs);
+			request.setAttribute("rsmdMetaData", rsmdMetaData);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -68,19 +68,24 @@ public class DbDao {
 		}
 	}
 
-	public static List<MetaDataBean> getRsmdColumnNames(ResultSet rs) {
+	public static List<MetaDataBean> getRsmdMetaData(ResultSet rs) {
 		List<MetaDataBean> tableMetaData = new ArrayList<>();
-		MetaDataBean mdBean = new MetaDataBean();
+		MetaDataBean mdBean;
 
 		try {
 			ResultSetMetaData rsmd = rs.getMetaData();
+
 			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+				mdBean = new MetaDataBean();
+
 				mdBean.setColumnName(rsmd.getColumnLabel(i));
 				mdBean.setDataType(rsmd.getColumnTypeName(i));
 				mdBean.setColumnWidth(rsmd.getPrecision(i));
 				mdBean.setSearchable(rsmd.isSearchable(i));
 				mdBean.setWriteable(rsmd.isWritable(i));
 				mdBean.setNullable(rsmd.isNullable(i));
+
+				tableMetaData.add(mdBean);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

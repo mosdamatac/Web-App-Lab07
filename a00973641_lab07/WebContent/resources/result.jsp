@@ -1,3 +1,4 @@
+<%@ page import="java.util.List, a00973641.data.MetaDataBean" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -25,9 +26,26 @@
 				<th>Writeable?</th>
 				<th>Nullable?</th>
 			</tr>
+			
+			<%
+			List<MetaDataBean> mdBean = (List<MetaDataBean>) request.getAttribute("rsmdMetaData");
+			for (MetaDataBean mdb : mdBean) {
+			%>
+			
+			<tr>
+				<td><%= mdb.getColumnName() %></td>
+				<td><%= mdb.getDataType() %></td>
+				<td><%= mdb.getColumnWidth() %></td>
+				<td><%= mdb.isSearchable() %></td>
+				<td><%= mdb.isWriteable() %></td>
+				<td><%= mdb.isNullable() %></td>
+			</tr>
+						
+			<%} %>
 		</table>
 		
 		<table name="dbData">
+			
 		</table>
 
 	</div>

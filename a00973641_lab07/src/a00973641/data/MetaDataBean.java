@@ -7,6 +7,7 @@
 package a00973641.data;
 
 import java.io.Serializable;
+import java.sql.ResultSetMetaData;
 
 /**
  * @author Mara
@@ -22,9 +23,9 @@ public class MetaDataBean implements Serializable {
 	private String columnName;
 	private String dataType;
 	private int columnWidth;
-	private boolean searchable;
-	private boolean writeable;
-	private int nullable;
+	private String searchable;
+	private String writeable;
+	private String nullable;
 
 	/**
 	 * @return the columnName
@@ -74,7 +75,7 @@ public class MetaDataBean implements Serializable {
 	/**
 	 * @return the searchable
 	 */
-	public boolean isSearchable() {
+	public String isSearchable() {
 		return searchable;
 	}
 
@@ -83,13 +84,16 @@ public class MetaDataBean implements Serializable {
 	 *            the searchable to set
 	 */
 	public void setSearchable(boolean searchable) {
-		this.searchable = searchable;
+		if (searchable)
+			this.searchable = "searchable";
+		else
+			this.searchable = "not searchable";
 	}
 
 	/**
 	 * @return the writeable
 	 */
-	public boolean isWriteable() {
+	public String isWriteable() {
 		return writeable;
 	}
 
@@ -98,13 +102,16 @@ public class MetaDataBean implements Serializable {
 	 *            the writeable to set
 	 */
 	public void setWriteable(boolean writeable) {
-		this.writeable = writeable;
+		if (writeable)
+			this.writeable = "writeable";
+		else
+			this.writeable = "not writeable";
 	}
 
 	/**
 	 * @return the nullable
 	 */
-	public int isNullable() {
+	public String isNullable() {
 		return nullable;
 	}
 
@@ -113,7 +120,12 @@ public class MetaDataBean implements Serializable {
 	 *            the nullable to set
 	 */
 	public void setNullable(int nullable) {
-		this.nullable = nullable;
+		if (nullable == ResultSetMetaData.columnNullable)
+			this.nullable = "nullable";
+		else if (nullable == ResultSetMetaData.columnNoNulls)
+			this.nullable = "not nullable";
+		else
+			this.nullable = "unknown";
 	}
 
 }
